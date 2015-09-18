@@ -1,15 +1,16 @@
-This is Storm-Logstash on vagrant example
+This is a Storm example on vagrant.
 =====================================
 
 You can run like this,
 
 ./build_deb.sh
 
-You can see the status of storm at http://192.168.82.150:8080
+You can see the status of storm at http://192.168.82.150:8080.
 
 It has 2 VMs. (/tzstorm/setup.conf)
-	- storm master(nimbus/supervisor/ui): 192.168.82.150
-	- storm worker(supervisor): 192.168.82.152
+
+- storm master(nimbus/supervisor/ui): 192.168.82.150
+- storm worker(supervisor): 192.168.82.152
 
 It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
