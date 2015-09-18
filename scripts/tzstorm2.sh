@@ -61,40 +61,28 @@ echo '    - "tzstorm.test.com"' >> conf/storm.yaml
 echo '    - "tzstorm2.test.com"' >> conf/storm.yaml
 echo 'nimbus.host: "tzstorm.test.com"' >> conf/storm.yaml
 
+echo 'supervisor.slots.ports:' >> conf/storm.yaml
+echo '    - 7000' >> conf/storm.yaml
+echo '    - 7001' >> conf/storm.yaml
+echo '    - 7002' >> conf/storm.yaml
+echo '    - 7003' >> conf/storm.yaml
+echo '    - 7004' >> conf/storm.yaml
+
+# heartbeat frequency worker start timeout
+echo 'supervisor.heartbeat.frequency.secs: 10' >> conf/storm.yaml
+echo 'supervisor.worker.start.timeout.secs: 120' >> conf/storm.yaml
+
 cp /vagrant/etc/init/storm.conf /etc/init
-storm nimbus &
 storm supervisor &
-storm ui &
-
-# http://tzstorm.test.com:8080
-
-### [install logstash] ############################################################################################################
-cd $HOME
-wget https://download.elastic.co/logstash/logstash/logstash-1.5.3.tar.gz
-tar xvfz logstash-1.5.3.tar.gz
-cd logstash-1.5.3
-mkdir patterns
-mkdir log_list
-cp /vagrant/etc/logstash/patterns/$PROJ_NAME patterns
-cp /vagrant/etc/logstash/log_list/$PROJ_NAME.conf log_list
-
-# https://www.digitalocean.com/community/tutorials/how-to-map-user-location-with-geoip-and-elk-elasticsearch-logstash-and-kibana
-curl -O "http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz"
-gunzip GeoLiteCity.dat.gz
-mkdir -p logs
-
-cp /vagrant/etc/init/logstash.conf /etc/init
-logstash -f log_list/$PROJ_NAME.conf -t &
-#service logstash restart
 
 ### [launch example app] ############################################################################################################
 cd $HOME
 cp /vagrant/target/$PROJ_NAME-$VERSION.jar $HOME/$PROJ_NAME
 
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm2
 
 #storm list
-#storm deactivate TestTopology_tzstorm
-#storm kill TestTopology_tzstorm
+#storm deactivate TestTopology_tzstorm2
+#storm kill TestTopology_tzstorm2
 
 
