@@ -14,7 +14,6 @@ import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
-import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import example2.tzstorm.MessageBean;
 
@@ -23,7 +22,7 @@ public class TestSpout2 extends BaseRichSpout {
 	private static final Log log = LogFactory.getLog(TestSpout2.class);
 
 	private SpoutOutputCollector collector;
-	private static String LOG_FILENAME = "data/a.log";
+	private static String LOG_FILENAME = "data/a.txt";
 	private Set<Object> logData = new HashSet<Object>();
 
 	@SuppressWarnings("rawtypes")

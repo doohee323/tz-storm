@@ -14,7 +14,7 @@ It has 2 VMs. (/tzstorm/setup.conf)
 
 It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
-- install zookeeper / storm / logstash
+- install zookeeper / storm(with esper) / logstash
 - register test app. in a master VM. (TestTopology_tzstorm)
 - register test app. in a worker VM. (TestTopology_tzstorm2)
 

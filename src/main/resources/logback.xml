@@ -11,6 +11,28 @@
 
 	<logger name="example2" level="INFO" />
 
+<!-- 	<appender name="tzstorm" class="ch.qos.logback.core.FileAppender"> -->
+<!-- 		<file>data/tzstorm.log</file> -->
+<!-- 		<append>true</append> -->
+<!-- 		<encoder> -->
+<!-- 			<pattern>%msg%n</pattern> -->
+<!-- 		</encoder> -->
+<!-- 	</appender> -->
+<!-- 	<logger name="example.tzstorm" level="INFO" additivity="false"> -->
+<!-- 		<appender-ref ref="tzstorm"/> -->
+<!-- 	</logger> -->
+
+<!-- 	<appender name="tzstorm2" class="ch.qos.logback.core.FileAppender"> -->
+<!-- 		<file>data/tzstorm2.log</file> -->
+<!-- 		<append>true</append> -->
+<!-- 		<encoder> -->
+<!-- 			<pattern>%msg%n</pattern> -->
+<!-- 		</encoder> -->
+<!-- 	</appender> -->
+<!-- 	<logger name="example.tzstorm2" level="INFO" additivity="false"> -->
+<!-- 		<appender-ref ref="tzstorm2"/> -->
+<!-- 	</logger> -->
+
 	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
 	</root>
