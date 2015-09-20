@@ -14,6 +14,7 @@ import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
+import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import example2.tzstorm.MessageBean;
 
@@ -25,7 +26,7 @@ public class TestSpout2 extends BaseRichSpout {
 	private static String LOG_FILENAME = "data/a.txt";
 	private Set<Object> logData = new HashSet<Object>();
 
-	@SuppressWarnings("rawtypes")
+//	@SuppressWarnings("rawtypes")
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
 		this.collector = collector;
@@ -33,6 +34,7 @@ public class TestSpout2 extends BaseRichSpout {
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+		declarer.declare(new Fields("say"));
 	}
 
 	/**
@@ -54,7 +56,7 @@ public class TestSpout2 extends BaseRichSpout {
 				logData.add(MessageBean.parse(oneLine));
 				oneLine = br.readLine();
 			}
-			log.info("Lines in ten second log: " + totalLines);
+			log.error("Lines in ten second log: " + totalLines);
 			br.close();
 		} catch (Exception e) {
 			e.getStackTrace();

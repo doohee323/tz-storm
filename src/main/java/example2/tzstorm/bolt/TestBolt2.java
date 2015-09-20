@@ -29,7 +29,7 @@ public class TestBolt2 extends BaseRichBolt {
 	private OutputCollector collector;
 	private EPServiceProvider epService;
 
-	@SuppressWarnings("rawtypes")
+//	@SuppressWarnings("rawtypes")
 	public void prepare(Map stormConf, TopologyContext context,
 			OutputCollector collector) {
 		this.collector = collector;
@@ -59,9 +59,9 @@ public class TestBolt2 extends BaseRichBolt {
 			public void update(EventBean[] arg0, EventBean[] arg1) {
 				if (arg0 != null) {
 					for (EventBean e : arg0) {
-						// log.info("log count for each " + e.get("hostname")
+						// log.error("log count for each " + e.get("hostname")
 						// + ": " + e.get("total"));
-						log.info("log -> " + e.get("timestamp") + ": "
+						log.error("log -> " + e.get("timestamp") + ": "
 								+ e.get("hostname"));
 					}
 				}
