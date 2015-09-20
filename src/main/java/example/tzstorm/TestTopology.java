@@ -5,6 +5,8 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
 import backtype.storm.topology.TopologyBuilder;
+import example.tzstorm.bolt.TestBolt;
+import example.tzstorm.spout.TestSpout;
 
 public class TestTopology {
     public static void main(String args[]) {

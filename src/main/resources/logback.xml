@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<timestamp key="bySecond" datePattern="yyyyMMddHH" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%message%n%xException{5}</pattern>
+<!-- 			<pattern>[[%coloredLevel %logger{15}]] - %message%n%xException{5}</pattern> -->
+		</encoder>
+	</appender>
+
+	<logger name="example2" level="INFO" />
+
+	<root level="ERROR">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

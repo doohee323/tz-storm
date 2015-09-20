@@ -1,4 +1,4 @@
-package example.tzstorm;
+package example.tzstorm.bolt;
 
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;

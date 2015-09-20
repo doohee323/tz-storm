@@ -4,6 +4,8 @@ import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.utils.Utils;
+import example.tzstorm.bolt.TestBolt;
+import example.tzstorm.spout.TestSpout;
 
 public class TestTopologyLocal {
     public static void main(String args[]) {

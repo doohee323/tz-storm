@@ -1,4 +1,4 @@
-package example.tzstorm;
+package example.tzstorm.spout;
 
 import java.util.Map;
 
