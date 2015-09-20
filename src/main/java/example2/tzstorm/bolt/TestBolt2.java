@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Tuple;
@@ -30,6 +29,7 @@ public class TestBolt2 extends BaseRichBolt {
 	private OutputCollector collector;
 	private EPServiceProvider epService;
 
+	@SuppressWarnings("rawtypes")
 	public void prepare(Map stormConf, TopologyContext context,
 			OutputCollector collector) {
 		this.collector = collector;
@@ -43,20 +43,29 @@ public class TestBolt2 extends BaseRichBolt {
 		epService = EPServiceProviderManager.getDefaultProvider(configuration);
 		epService.initialize();
 
-		EPStatement statement = epService
-				.getEPAdministrator()
-				.createEPL(
-						"select count(distinct Log.clientID) as total from Log.win:time(6 second) output snapshot every 2 sec");
-		
+		StringBuffer qeury = new StringBuffer();
+		// qeury.append("SELECT COUNT(Log.hostname) AS total, ");
+		// qeury.append("Log.hostname AS hostname ");
+		// qeury.append("FROM Log.win:time(10 SECOND) ");
+		// // qeury.append("WHERE Log.hostname = \"ruleset32.xdn.com\" ");
+		// qeury.append("GROUP BY Log.hostname ");
+		// qeury.append("OUTPUT SNAPSHOT EVERY 2 SEC ");
+
+		qeury.append("select * from Log t where t.hostname = \"ruleset33.xdn.com\" ");
+		EPStatement statement = epService.getEPAdministrator().createEPL(
+				qeury.toString());
+
 		statement.addListener(new UpdateListener() {
 			public void update(EventBean[] arg0, EventBean[] arg1) {
 				if (arg0 != null) {
 					for (EventBean e : arg0) {
-						log.info("online visitors: " + e.get("total"));
+						// log.info("log count for each " + e.get("hostname")
+						// + ": " + e.get("total"));
+						log.info("log -> " + e.get("timestamp") + ": "
+								+ e.get("hostname"));
 					}
 				}
 			}
-
 		});
 	}
 

@@ -2,10 +2,10 @@ package example2.tzstorm.spout;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,90 +19,58 @@ import backtype.storm.tuple.Values;
 import example2.tzstorm.MessageBean;
 
 public class TestSpout2 extends BaseRichSpout {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private static final Log log = LogFactory.getLog(TestSpout2.class);
-	
-    private SpoutOutputCollector collector;
-	private static String LOG_FILENAME = "data/10secondsimulator.log";
-	private ArrayList<List<Object>> logData = new ArrayList<List<Object>>();
 
-	private long lastEmitTime;
-	private long clock = 0;
-	
-    public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
-        this.collector = collector;
-		try {
-			this.prepareData();
-		} catch (Exception e) {
-			log.fatal("", e);
-		}
-    }
+	private SpoutOutputCollector collector;
+	private static String LOG_FILENAME = "data/a.log";
+	private Set<Object> logData = new HashSet<Object>();
 
-    public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("say"));
-    }
+	@SuppressWarnings("rawtypes")
+	public void open(Map conf, TopologyContext context,
+			SpoutOutputCollector collector) {
+		this.collector = collector;
+		this.prepareData();
+	}
 
+	public void declareOutputFields(OutputFieldsDeclarer declarer) {
+	}
 
 	/**
 	 * 
 	 * @throws Exception
 	 */
-	private void prepareData() throws Exception {
-		BufferedReader br = new BufferedReader(new FileReader(LOG_FILENAME));
-		String oneLine = br.readLine();
-		if (oneLine == null) {
-			br.close();
-			throw new Exception("!!!");
-		}
-		
-		String currentTime = "";
-		ArrayList<Object> messages = null;
-		int totalLines = 0;
-		while (oneLine != null) {
-			String time = oneLine.substring(0, oneLine.indexOf("\t"));
-			log.info("currentTime: " + currentTime);
-			log.info("time: " + time);
-			if (!currentTime.equals(time)) {
-				if (messages != null) {
-					this.logData.add(messages);
-				}
-				messages = new ArrayList<Object>();
-				currentTime = time;
+	private void prepareData() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(LOG_FILENAME));
+			String oneLine = br.readLine();
+			if (oneLine == null) {
+				br.close();
+				throw new Exception("!!!");
 			}
-			
-			MessageBean message = MessageBean.parse(oneLine);	
-			totalLines++;
-			messages.add(message);
-			oneLine = br.readLine();
+
+			int totalLines = 0;
+			while (oneLine != null) {
+				totalLines++;
+				logData.add(MessageBean.parse(oneLine));
+				oneLine = br.readLine();
+			}
+			log.info("Lines in ten second log: " + totalLines);
+			br.close();
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
-		log.info("Lines in ten second log: " + totalLines);
-		logData.add(messages);
-		br.close();
-	}    
+	}
 
 	/**
 	 */
 	public void nextTuple() {
-		long currentTime = System.currentTimeMillis() / 1000;
-		if (currentTime == this.lastEmitTime) {
-			try {
-				TimeUnit.MILLISECONDS.sleep(100);
-				return;
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				return;
-			}
+		while (!this.logData.isEmpty()) {
+			Iterator<Object> itr = this.logData.iterator();
+			MessageBean item = (MessageBean) itr.next();
+			collector.emit(new Values(item));
+			this.logData.remove(item);
 		}
-		
-		long count = currentTime - this.lastEmitTime;
-		for (int i = 0; i < count; i++) {
-			List<Object> tuples = this.logData.get((int) ((clock + i) % this.logData.size()));
-			for (Object o : tuples) {
-				collector.emit(new Values(o));
-			}
-		}
-		this.lastEmitTime = currentTime;
-		this.clock = this.clock + count;
-	}	
-    
+	}
+
 }
