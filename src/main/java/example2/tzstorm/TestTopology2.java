@@ -15,7 +15,7 @@ public class TestTopology2 {
     private static final String SPOUT_ID = "TestSpout2";
     private static final String BOLT_ID = "TestBolt2";
     private static final String TOPOLOGY_ID = "TestTopology2";
-    
+
     public static void main(String args[]) {
         TopologyBuilder builder = new TopologyBuilder();
         builder.setSpout(SPOUT_ID, new TestSpout2(), 2);

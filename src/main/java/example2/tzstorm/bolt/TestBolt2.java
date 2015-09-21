@@ -19,63 +19,60 @@ import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 
-import example2.tzstorm.MessageBean;
+import example2.tzstorm.LogBean;
 
 public class TestBolt2 extends BaseRichBolt {
 
-	private static final long serialVersionUID = 1L;
-	static final Logger log = LoggerFactory.getLogger(TestBolt2.class);
+    private static final long serialVersionUID = 1L;
+    static final Logger log = LoggerFactory.getLogger(TestBolt2.class);
 
-	private OutputCollector collector;
-	private EPServiceProvider epService;
+    private OutputCollector collector;
+    private EPServiceProvider epService;
 
-//	@SuppressWarnings("rawtypes")
-	public void prepare(Map stormConf, TopologyContext context,
-			OutputCollector collector) {
-		this.collector = collector;
-		this.setUpEsper();
-	}
+    @SuppressWarnings("rawtypes")
+    public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
+        this.collector = collector;
+        this.setUpEsper();
+    }
 
-	private void setUpEsper() {
-		Configuration configuration = new Configuration();
-		configuration.addEventType("Log", MessageBean.class.getName());
+    private void setUpEsper() {
+        Configuration configuration = new Configuration();
+        configuration.addEventType("Log", LogBean.class.getName());
 
-		epService = EPServiceProviderManager.getDefaultProvider(configuration);
-		epService.initialize();
+        epService = EPServiceProviderManager.getDefaultProvider(configuration);
+        epService.initialize();
 
-		StringBuffer qeury = new StringBuffer();
-		// qeury.append("SELECT COUNT(Log.hostname) AS total, ");
-		// qeury.append("Log.hostname AS hostname ");
-		// qeury.append("FROM Log.win:time(10 SECOND) ");
-		// // qeury.append("WHERE Log.hostname = \"ruleset32.xdn.com\" ");
-		// qeury.append("GROUP BY Log.hostname ");
-		// qeury.append("OUTPUT SNAPSHOT EVERY 2 SEC ");
+        StringBuffer qeury = new StringBuffer();
+        // qeury.append("SELECT COUNT(Log.hostname) AS total, ");
+        // qeury.append("Log.hostname AS hostname ");
+        // qeury.append("FROM Log.win:time(10 SECOND) ");
+        // // qeury.append("WHERE Log.hostname = \"ruleset32.xdn.com\" ");
+        // qeury.append("GROUP BY Log.hostname ");
+        // qeury.append("OUTPUT SNAPSHOT EVERY 2 SEC ");
 
-		qeury.append("select * from Log t where t.hostname = \"ruleset33.xdn.com\" ");
-		EPStatement statement = epService.getEPAdministrator().createEPL(
-				qeury.toString());
+        qeury.append("select * from Log t where t.hostname = \"ruleset33.xdn.com\" ");
+        EPStatement statement = epService.getEPAdministrator().createEPL(qeury.toString());
 
-		statement.addListener(new UpdateListener() {
-			public void update(EventBean[] arg0, EventBean[] arg1) {
-				if (arg0 != null) {
-					for (EventBean e : arg0) {
-						// log.error("log count for each " + e.get("hostname")
-						// + ": " + e.get("total"));
-						log.error("log -> " + e.get("timestamp") + ": "
-								+ e.get("hostname"));
-					}
-				}
-			}
-		});
-	}
+        statement.addListener(new UpdateListener() {
+            public void update(EventBean[] arg0, EventBean[] arg1) {
+                if (arg0 != null) {
+                    for (EventBean e : arg0) {
+                        // log.error("log count for each " + e.get("hostname")
+                        // + ": " + e.get("total"));
+                        log.error("log -> " + e.get("timestamp") + ": " + e.get("hostname"));
+                    }
+                }
+            }
+        });
+    }
 
-	public void execute(Tuple input) {
-		List<Object> values = input.getValues();
-		epService.getEPRuntime().sendEvent(values.get(0));
-		collector.ack(input);
-	}
+    public void execute(Tuple input) {
+        List<Object> values = input.getValues();
+        epService.getEPRuntime().sendEvent(values.get(0));
+        collector.ack(input);
+    }
 
-	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-	}
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    }
 
 }

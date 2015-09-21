@@ -20,3 +20,5 @@ It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
 - send log to elasticsearch with logstash (to-do)
 
+When you run topology in local environment like eclipse, use "-Dlocal=true" in VM arguments.
+
