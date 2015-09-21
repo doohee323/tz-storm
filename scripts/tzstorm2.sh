@@ -78,8 +78,11 @@ storm supervisor &
 ### [launch example app] ############################################################################################################
 cd $HOME
 cp /vagrant/target/$PROJ_NAME-$VERSION.jar $HOME/$PROJ_NAME
+mkdir -p $HOME/$PROJ_NAME/data
+cp /vagrant/lib/esper-5.3.0.jar $HOME/apache-storm-0.9.5/lib
+cp /vagrant/data/a.txt $HOME/$PROJ_NAME/data
 
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm2
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example2.tzstorm.TestTopology2 TestTopology_tzstorm2
 
 #storm list
 #storm deactivate TestTopology_tzstorm2
