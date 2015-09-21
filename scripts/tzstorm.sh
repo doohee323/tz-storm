@@ -91,8 +91,7 @@ logstash -f log_list/$PROJ_NAME.conf -t &
 cd $HOME
 cp /vagrant/target/$PROJ_NAME-$VERSION.jar $HOME/$PROJ_NAME
 
-#storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example2.tzstorm.TestTopology2 TestTopology_tzstorm2
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm
 
 #storm list
 #storm deactivate TestTopology_tzstorm
