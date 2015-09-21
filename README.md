@@ -1,4 +1,4 @@
-This is a Storm example on vagrant.
+This is a Storm-Esper example on vagrant.
 =====================================
 
 You can run like this,
@@ -15,8 +15,8 @@ It has 2 VMs. (/tzstorm/setup.conf)
 It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
 - install zookeeper / storm(with esper) / logstash
-- register test app. in a master VM. (TestTopology_tzstorm)
-- register test app. in a worker VM. (TestTopology_tzstorm2)
+- register storm test app. in a master VM. (TestTopology_tzstorm)
+- register storm-esper test app. in a worker VM. (TestTopology_tzstorm2)
 
 - send log to elasticsearch with logstash (to-do)
 
