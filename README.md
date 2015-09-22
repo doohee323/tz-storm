@@ -14,16 +14,28 @@ It has 2 VMs. (/tzstorm/setup.conf)
 
 It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
-- install zookeeper / storm(with esper) / logstash
+- install kafka / zookeeper / storm(with esper) / logstash
 - register storm test app. in a master VM. (TestTopology_tzstorm)
 - register storm-esper test app. in a worker VM. (TestTopology_tzstorm2)
 
 - send log to elasticsearch with logstash (to-do)
 
-When you run topology in local environment like eclipse, use "-DrunType=local" in VM arguments.
+When you run topology, you can use VM arguments.
 
-When you run topology in storm environment, use "-DrunType=storm" in VM arguments.
+- in local environment like eclipse, use "-DrunType=local".
+- in storm environment, use "-DrunType=storm".
+- in kafka-integrate environment, use "-DrunType=kafka".
 
-When you run topology in kafka-integrate environment, use "-DrunType=kafka" in VM arguments.
+There are some examples.
+/tzstorm/src/main/java/example/tzstorm/TestTopology.java
+-> Simple storm example 
 
+/tzstorm/src/main/java/example2/tzstorm/TestTopology2.java
+-> storm + esper example 
+
+/tzstorm/src/main/java/example3/tzstorm/TestTopology3.java
+-> multiple bolts example
+
+/tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
+-> kafka - storm(multiple bolts) example
 
