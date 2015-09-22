@@ -21,9 +21,9 @@ public class TestTopology {
         builder.setSpout(SPOUT_ID, new TestSpout(), 2);
         builder.setBolt(BOLT_ID, new TestBolt(), 2).setNumTasks(4).shuffleGrouping(SPOUT_ID);
 
-        boolean localMode = Boolean.parseBoolean(System.getProperty("local", "false"));
         Config conf = new Config();
-        if (localMode) {
+        String runType = System.getProperty("runType", "local");
+        if (runType.equals("local")) {
             conf.setDebug(true);
             LocalCluster cluster = new LocalCluster();
 

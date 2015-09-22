@@ -1,4 +1,4 @@
-This is a Storm-Esper example on vagrant.
+This is a Kafka-Storm-Esper example on vagrant.
 =====================================
 
 You can run like this,
@@ -20,5 +20,10 @@ It includes some features, (/tzstorm/scripts/tzstorm.sh)
 
 - send log to elasticsearch with logstash (to-do)
 
-When you run topology in local environment like eclipse, use "-Dlocal=true" in VM arguments.
+When you run topology in local environment like eclipse, use "-DrunType=local" in VM arguments.
+
+When you run topology in storm environment, use "-DrunType=storm" in VM arguments.
+
+When you run topology in kafka-integrate environment, use "-DrunType=kafka" in VM arguments.
+
 

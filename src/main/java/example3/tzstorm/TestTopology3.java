@@ -34,8 +34,8 @@ public class TestTopology3 {
 
         Config cfg = new Config();
 
-        boolean localMode = Boolean.parseBoolean(System.getProperty("local", "false"));
-        if (localMode) {
+        String runType = System.getProperty("runType", "local");
+        if (runType.equals("local")) {
             LocalCluster cluster = new LocalCluster();
             cluster.submitTopology(TOPOLOGY_ID, cfg, builder.createTopology());
             Utils.sleep(10 * 1000);
