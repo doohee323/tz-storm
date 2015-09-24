@@ -32,6 +32,14 @@
     </encoder>
   </appender>
 
+  <appender name="tzstorm5" class="ch.qos.logback.core.FileAppender">
+    <file>data/tzstorm5.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
   <logger name="example.tzstorm" level="ERROR" additivity="false">
     <appender-ref ref="tzstorm" />
   </logger>
@@ -42,6 +50,10 @@
 
   <logger name="example3.tzstorm" level="ERROR" additivity="false">
     <appender-ref ref="tzstorm3" />
+  </logger>
+
+  <logger name="example5.tzstorm" level="ERROR" additivity="false">
+    <appender-ref ref="tzstorm5" />
   </logger>
 
   <root level="DEBUG">

@@ -27,7 +27,7 @@
     <dependency>
       <groupId>org.apache.storm</groupId>
       <artifactId>storm-core</artifactId>
-      <version>0.9.3</version>
+      <version>0.9.1-incubating</version>
     </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>
@@ -62,7 +62,7 @@
           <groupId>com.101tec</groupId>
           <artifactId>zkclient</artifactId>
         </exclusion>
-      </exclusions>      
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.storm</groupId>
@@ -97,7 +97,7 @@
           <groupId>com.101tec</groupId>
           <artifactId>zkclient</artifactId>
         </exclusion>
-      </exclusions>      
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.espertech</groupId>

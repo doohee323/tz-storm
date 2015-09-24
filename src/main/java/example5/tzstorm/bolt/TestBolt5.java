@@ -6,11 +6,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import storm.trident.operation.Function;
+import storm.trident.operation.TridentCollector;
+import storm.trident.operation.TridentOperationContext;
+import storm.trident.tuple.TridentTuple;
 import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichBolt;
-import backtype.storm.tuple.Tuple;
 
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPServiceProvider;
@@ -18,21 +18,34 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
+import com.google.gson.Gson;
 
 import example5.tzstorm.LogBean;
 
-public class TestBolt5 extends BaseRichBolt {
+@SuppressWarnings("rawtypes")
+public class TestBolt5 implements Function {
 
     private static final long serialVersionUID = 1L;
     static final Logger log = LoggerFactory.getLogger(TestBolt5.class);
+    private int partitionIndex;
+    
+    private static final Gson gson = new Gson();
 
-    private OutputCollector collector;
     private EPServiceProvider epService;
 
-    @SuppressWarnings("rawtypes")
-    public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
-        this.collector = collector;
+    public void prepare(Map conf, TridentOperationContext context) {
+        log.info("CountSumFunction.prepare(): partition[{}/{}]", context.getPartitionIndex(), context.numPartitions());
+        partitionIndex = context.getPartitionIndex();
         this.setUpEsper();
+    }
+
+    public void cleanup() {
+    }
+
+    public void execute(TridentTuple tuple, TridentCollector collector) {
+        List<Object> values = tuple.getValues();
+        LogBean logBean = gson.fromJson((String)values.get(0), LogBean.class);
+        epService.getEPRuntime().sendEvent(logBean);
     }
 
     private void setUpEsper() {
@@ -50,7 +63,7 @@ public class TestBolt5 extends BaseRichBolt {
         // qeury.append("GROUP BY Log.hostname ");
         // qeury.append("OUTPUT SNAPSHOT EVERY 2 SEC ");
 
-        qeury.append("select * from Log t where t.hostname = \"ruleset33.xdn.com\" ");
+        qeury.append("select * from Log t where t.hostname = \"ruleset32.xdn.com\" ");
         EPStatement statement = epService.getEPAdministrator().createEPL(qeury.toString());
 
         statement.addListener(new UpdateListener() {
@@ -64,15 +77,6 @@ public class TestBolt5 extends BaseRichBolt {
                 }
             }
         });
-    }
-
-    public void execute(Tuple input) {
-        List<Object> values = input.getValues();
-        epService.getEPRuntime().sendEvent(values.get(0));
-        collector.ack(input);
-    }
-
-    public void declareOutputFields(OutputFieldsDeclarer declarer) {
     }
 
 }

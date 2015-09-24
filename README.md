@@ -39,3 +39,6 @@ There are some examples.
 /tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
 -> kafka - storm(multiple bolts) example
 
+/tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
+-> storm + trident(unique data) + esper example 
+

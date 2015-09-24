@@ -1,76 +1,37 @@
 package example5.tzstorm.spout;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import backtype.storm.spout.SpoutOutputCollector;
+import storm.trident.spout.ITridentSpout;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Values;
-import example5.tzstorm.LogBean;
 
-public class TestSpout5 extends BaseRichSpout {
+@SuppressWarnings("rawtypes")
+public class TestSpout5 implements ITridentSpout<Long> {
     private static final long serialVersionUID = 1L;
     private static final Log log = LogFactory.getLog(TestSpout5.class);
 
-    private SpoutOutputCollector collector;
-    private static String LOG_FILENAME = "data/a.txt";
-    private Set<Object> logData = new HashSet<Object>();
-
-    @SuppressWarnings("rawtypes")
-    public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
-        this.collector = collector;
-        this.prepareData();
+    public BatchCoordinator<Long> getCoordinator(String txStateId, Map conf, TopologyContext context) {
+        log.debug("LogSpout.getCoordinator({}, conf, context)" + txStateId);
+        return new LogBatchCoordinator();
     }
 
-    public void declareOutputFields(OutputFieldsDeclarer declarer) {
-        declarer.declare(new Fields("say"));
+    public Emitter<Long> getEmitter(String txStateId, Map conf, TopologyContext context) {
+        log.debug("LogSpout.getEmitter({}, conf, context)" + txStateId);
+        return new LogEmitter();
     }
 
-    /**
-     * 
-     * @throws Exception
-     */
-    private void prepareData() {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(LOG_FILENAME));
-            String oneLine = br.readLine();
-            if (oneLine == null) {
-                br.close();
-                throw new Exception("!!!");
-            }
-
-            int totalLines = 0;
-            while (oneLine != null) {
-                totalLines++;
-                logData.add(LogBean.parse(oneLine));
-                oneLine = br.readLine();
-            }
-            log.error("Lines in ten second log: " + totalLines);
-            br.close();
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
+    public Map getComponentConfiguration() {
+        log.debug("LogSpout.getComponentConfiguration()");
+        return null;
     }
 
-    /**
-	 */
-    public void nextTuple() {
-        while (!this.logData.isEmpty()) {
-            Iterator<Object> itr = this.logData.iterator();
-            LogBean item = (LogBean) itr.next();
-            collector.emit(new Values(item));
-            this.logData.remove(item);
-        }
+    public Fields getOutputFields() {
+        log.debug("LogSpout.getOutputFields()");
+        return new Fields("logstring");
     }
 
 }
