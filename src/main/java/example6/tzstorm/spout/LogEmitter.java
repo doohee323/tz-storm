@@ -1,4 +1,4 @@
-package example5.tzstorm.spout;
+package example6.tzstorm.spout;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

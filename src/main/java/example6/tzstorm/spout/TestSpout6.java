@@ -1,4 +1,4 @@
-package example5.tzstorm.spout;
+package example6.tzstorm.spout;
 
 import java.util.Map;
 
@@ -10,17 +10,17 @@ import backtype.storm.task.TopologyContext;
 import backtype.storm.tuple.Fields;
 
 @SuppressWarnings("rawtypes")
-public class TestSpout5 implements ITridentSpout<Long> {
+public class TestSpout6 implements ITridentSpout<Long> {
     private static final long serialVersionUID = 1L;
-    private static final Log log = LogFactory.getLog(TestSpout5.class);
+    private static final Log log = LogFactory.getLog(TestSpout6.class);
 
     public BatchCoordinator<Long> getCoordinator(String txStateId, Map conf, TopologyContext context) {
-        log.debug("TestSpout5.getCoordinator({}, conf, context)" + txStateId);
+        log.debug("TestSpout6.getCoordinator({}, conf, context)" + txStateId);
         return new LogBatchCoordinator();
     }
 
     public Emitter<Long> getEmitter(String txStateId, Map conf, TopologyContext context) {
-        log.debug("TestSpout5.getEmitter({}, conf, context)" + txStateId);
+        log.debug("TestSpout6.getEmitter({}, conf, context)" + txStateId);
         return new LogEmitter();
     }
 
