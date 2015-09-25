@@ -66,7 +66,7 @@ public class TestBolt6 implements Function {
 		// qeury.append("GROUP BY Log.hostname ");
 		// qeury.append("OUTPUT SNAPSHOT EVERY 2 SEC ");
 
-		qeury.append("select * from Log t where t.hostname = \"ruleset32.xdn.com\" ");
+		qeury.append("select * from Log t where t.hostname = \"ruleset33.xdn.com\" ");
 		EPStatement statement = epService.getEPAdministrator().createEPL(
 				qeury.toString());
 

@@ -18,7 +18,7 @@ import storm.trident.topology.TransactionAttempt;
 public class LogEmitter implements Emitter<Long> {
     private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);
     private List<String> logData = new ArrayList<String>();
-    private Long poll_interval = 100000L; // 10 ms
+    private Long poll_interval = 100000L;
     
     public void emitBatch(TransactionAttempt tx, Long coordinatorMeta, TridentCollector collector) {
         log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
@@ -47,7 +47,7 @@ public class LogEmitter implements Emitter<Long> {
                             log.error(input);
                             logData.add(input);
                              List<Object> oneTuple = Arrays.<Object> asList(input);
-                             Utils.sleep(1000);
+                             Utils.sleep(100);
                              collector.emit(oneTuple);
                         } catch (Exception e) {
                             System.out.println(e);

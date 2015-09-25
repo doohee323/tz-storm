@@ -108,7 +108,7 @@ public class ZMQClient {
         try {
             ZMQClient client = new ZMQClient("tcp://127.0.0.1:9999");
             client.sendLog();
-            Utils.sleep(1000);
+            Utils.sleep(100000);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
