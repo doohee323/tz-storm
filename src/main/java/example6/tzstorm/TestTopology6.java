@@ -33,7 +33,7 @@ public class TestTopology6 {
             LocalCluster cluster = new LocalCluster();
 
             cluster.submitTopology(TOPOLOGY_ID, conf, stormTopology);
-            Utils.sleep(1000000);
+            Utils.sleep(10000000);
             cluster.killTopology(TOPOLOGY_ID);
             cluster.shutdown();
         } else {

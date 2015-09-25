@@ -46,6 +46,7 @@ public class TestBolt6 implements Function {
 
 	public void execute(TridentTuple tuple, TridentCollector collector) {
 		List<Object> values = tuple.getValues();
+		log.error("execute:" + (String) values.get(0));
 		LogBean logBean = gson.fromJson((String) values.get(0), LogBean.class);
 		epService.getEPRuntime().sendEvent(logBean);
 	}
@@ -75,7 +76,7 @@ public class TestBolt6 implements Function {
 					for (EventBean e : arg0) {
 						// log.error("log count for each " + e.get("hostname")
 						// + ": " + e.get("total"));
-						log.error("log -> " + e.get("timestamp") + ": "
+						log.info("esper:" + System.currentTimeMillis() + " -> " + e.get("timestamp") + ": "
 								+ e.get("hostname"));
 					}
 				}

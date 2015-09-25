@@ -10,76 +10,70 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQException;
 
+import backtype.storm.utils.Utils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.spout.ITridentSpout.Emitter;
 import storm.trident.topology.TransactionAttempt;
 
-import com.google.gson.Gson;
-
 public class LogEmitter implements Emitter<Long> {
-	private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);
-	private List<String> logData = new ArrayList<String>();
+    private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);
+    private List<String> logData = new ArrayList<String>();
+    private Long poll_interval = 100000L; // 10 ms
+    
+    public void emitBatch(TransactionAttempt tx, Long coordinatorMeta, TridentCollector collector) {
+        log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
+        getData(collector);
+        // for (String input : logData) {
+        // List<Object> oneTuple = Arrays.<Object> asList(input);
+        // collector.emit(oneTuple);
+        // }
+    }
 
-	private static final Gson gson = new Gson();
+    private void getData(TridentCollector collector) {
+        try {
+            ZMQ.Context context = ZMQ.context(1);
+            ZMQ.Socket pull = context.socket(ZMQ.PULL);
+            try {
+                pull.setLinger(0L);
+                pull.bind("tcp://127.0.0.1:9999");
 
-	public void emitBatch(TransactionAttempt tx, Long coordinatorMeta,
-			TridentCollector collector) {
-		log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
-		getData(collector);
-//		for (String input : logData) {
-//			List<Object> oneTuple = Arrays.<Object> asList(input);
-//			collector.emit(oneTuple);
-//		}
-	}
+                Poller poller = context.poller(1);
+                poller.register(pull, Poller.POLLIN);
 
-	private void getData(TridentCollector collector) {
-		try {
-			ZMQ.Context context = ZMQ.context(1);
-			ZMQ.Socket pull = context.socket(ZMQ.PULL);
-			try {
-				pull.setLinger(0L);
-				pull.bind("tcp://127.0.0.1:9999");
-				
-//				for(int i=0;i<10;i++) {
-//					String input = new String(pull.recv(0));
-//					List<Object> oneTuple = Arrays.<Object> asList(input);
-//					collector.emit(oneTuple);
-//				}
-				
-				Poller poller = context.poller();
-				poller.register(pull, Poller.POLLIN);
+                if (0 != poller.poll(poll_interval)) {
+                    if (poller.pollin(0)) {
+                        try {
+                            String input = new String(pull.recv(0));
+                            log.error(input);
+                            logData.add(input);
+                             List<Object> oneTuple = Arrays.<Object> asList(input);
+                             Utils.sleep(1000);
+                             collector.emit(oneTuple);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+                }
+            } finally {
+                try {
+                    pull.close();
+                    context.term();
+                } catch (Exception ignore) {
+                }
+            }
+        } catch (ZMQException e) {
+            throw new RuntimeException(e.getCause());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
+    }
 
-				if (0 != poller.poll()) {
-					if (poller.pollin(0)) {
-						try {
-							String input = new String(pull.recv(0));
-							System.out.println(input);
-							logData.add(input);
-						} catch (Exception e) {
-							System.out.println(e);
-						}
-					}
-				}
-			} finally {
-				try {
-					pull.close();
-					context.term();
-				} catch (Exception ignore) {
-				}
-			}
-		} catch (ZMQException e) {
-			throw new RuntimeException(e.getCause());
-		} catch (Exception e) {
-			throw new RuntimeException(e.getCause());
-		}
-	}
+    public void success(TransactionAttempt tx) {
+        log.debug("Emitter.success({})", tx);
+    }
 
-	public void success(TransactionAttempt tx) {
-		log.debug("Emitter.success({})", tx);
-	}
-
-	public void close() {
-		log.debug("Emitter.close()");
-	}
+    public void close() {
+        log.debug("Emitter.close()");
+    }
 
 }

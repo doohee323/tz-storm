@@ -91,8 +91,10 @@ public class ZMQClient {
             int totalLines = 0;
             while (oneLine != null) {
                 totalLines++;
-//                Utils.sleep(1000);
-                send(oneLine);
+                Utils.sleep(1000);
+                if(oneLine!= null && oneLine.length() > 0) {
+                    send(oneLine);
+                }
                 oneLine = br.readLine();
             }
             log.debug("Lines in ten second log: " + totalLines);
@@ -106,6 +108,7 @@ public class ZMQClient {
         try {
             ZMQClient client = new ZMQClient("tcp://127.0.0.1:9999");
             client.sendLog();
+            Utils.sleep(1000);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
