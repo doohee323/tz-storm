@@ -1,6 +1,5 @@
 package example6.tzstorm.spout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,23 +9,18 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQException;
 
-import backtype.storm.utils.Utils;
 import storm.trident.operation.TridentCollector;
 import storm.trident.spout.ITridentSpout.Emitter;
 import storm.trident.topology.TransactionAttempt;
+import backtype.storm.utils.Utils;
 
 public class LogEmitter implements Emitter<Long> {
     private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);
-    private List<String> logData = new ArrayList<String>();
     private Long poll_interval = 100000L;
     
     public void emitBatch(TransactionAttempt tx, Long coordinatorMeta, TridentCollector collector) {
         log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
         getData(collector);
-        // for (String input : logData) {
-        // List<Object> oneTuple = Arrays.<Object> asList(input);
-        // collector.emit(oneTuple);
-        // }
     }
 
     private void getData(TridentCollector collector) {
@@ -45,7 +39,6 @@ public class LogEmitter implements Emitter<Long> {
                         try {
                             String input = new String(pull.recv(0));
                             log.error(input);
-                            logData.add(input);
                              List<Object> oneTuple = Arrays.<Object> asList(input);
                              Utils.sleep(100);
                              collector.emit(oneTuple);
