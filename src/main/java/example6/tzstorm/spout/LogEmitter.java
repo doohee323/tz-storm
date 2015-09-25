@@ -26,20 +26,27 @@ public class LogEmitter implements Emitter<Long> {
 			TridentCollector collector) {
 		log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
 		getData(collector);
-		for (String input : logData) {
-			List<Object> oneTuple = Arrays.<Object> asList(input);
-			collector.emit(oneTuple);
-		}
+//		for (String input : logData) {
+//			List<Object> oneTuple = Arrays.<Object> asList(input);
+//			collector.emit(oneTuple);
+//		}
 	}
 
 	private void getData(TridentCollector collector) {
 		try {
-			ZMQ.Context context = ZMQ.context(3);
+			ZMQ.Context context = ZMQ.context(1);
 			ZMQ.Socket pull = context.socket(ZMQ.PULL);
 			try {
 				pull.setLinger(0L);
 				pull.bind("tcp://127.0.0.1:9999");
-				Poller poller = context.poller(1);
+				
+//				for(int i=0;i<10;i++) {
+//					String input = new String(pull.recv(0));
+//					List<Object> oneTuple = Arrays.<Object> asList(input);
+//					collector.emit(oneTuple);
+//				}
+				
+				Poller poller = context.poller();
 				poller.register(pull, Poller.POLLIN);
 
 				if (0 != poller.poll()) {
