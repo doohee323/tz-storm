@@ -9,6 +9,9 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
+import backtype.storm.utils.Utils;
+import ch.qos.logback.classic.pattern.Util;
+
 public class ZMQClient {
     static final Logger log = LoggerFactory.getLogger(ZMQClient.class);
 
@@ -88,6 +91,7 @@ public class ZMQClient {
             int totalLines = 0;
             while (oneLine != null) {
                 totalLines++;
+//                Utils.sleep(1000);
                 send(oneLine);
                 oneLine = br.readLine();
             }
