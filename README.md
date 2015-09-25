@@ -42,3 +42,8 @@ There are some examples.
 /tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
 -> storm + trident(unique data) + esper example 
 
+/tzstorm/src/main/java/example6/tzstorm/TestTopology6.java
+-> zmq + storm + trident(unique data) + esper example 
+
+-classpath .:/Users/mac/.m2/repository/org/zeromq/jzmq/3.1.0/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+
