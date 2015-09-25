@@ -43,7 +43,37 @@ There are some examples.
 -> storm + trident(unique data) + esper example 
 
 /tzstorm/src/main/java/example6/tzstorm/TestTopology6.java
--> zmq + storm + trident(unique data) + esper example 
+-> zmq pull + storm + trident(unique data) + esper example 
+-classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
--classpath .:/Users/mac/.m2/repository/org/zeromq/jzmq/3.1.0/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+/tzstorm/src/main/java/example6/tzstorm/zmq/ZMQClient.java
+-> zmq push
+-classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+
+* zmq install on mac
+
+1) libzmq
+git clone git://github.com/zeromq/libzmq.git
+cd libzmq
+./autogen.sh
+./configure --prefix=/usr/share/pkgconfig --without-libsodium
+make
+sudo make install
+
+2) jzmq
+git clone https://github.com/zeromq/jzmq.git
+cd jzmq
+./autogen.sh
+./configure --with-zeromq=/home/vagrant/libzmq
+(./configure --with-zeromq=/Users/mac/tmp/libzmq)
+make
+sudo make install
+
+3) copy libraries
+sudo cp /usr/local/share/java/zmq.jar /usr/local/lib
+sudo cp /usr/local/lib/libjzmq.* /usr/local/lib
+(sudo cp /usr/share/pkgconfig/lib/*.* /usr/local/lib)
+
+
+
 
