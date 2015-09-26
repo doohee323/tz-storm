@@ -10,12 +10,10 @@ import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
 import backtype.storm.utils.Utils;
-import ch.qos.logback.classic.pattern.Util;
 
 public class ZMQClient {
     static final Logger log = LoggerFactory.getLogger(ZMQClient.class);
 
-    private String _url;
     private Context context = null;
     private Socket socket = null;
     private StringBuilder sb = new StringBuilder(1024);
@@ -23,7 +21,6 @@ public class ZMQClient {
     private final static int VERSION = 1;
 
     public ZMQClient(String url) throws Exception {
-        _url = url;
         context = ZMQ.context(1);
         socket = context.socket(ZMQ.REQ);
         socket.setLinger(0);

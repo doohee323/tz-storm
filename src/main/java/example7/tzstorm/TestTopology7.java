@@ -13,7 +13,6 @@ import example7.tzstorm.bolt.TestBolt7;
 import example7.tzstorm.operator.DistinctStateFactory;
 import example7.tzstorm.operator.DistinctStateUpdater;
 import example7.tzstorm.spout.TestSpout7;
-import example7.tzstorm.zmq.ZMQServer;
 
 
 public class TestTopology7 {
