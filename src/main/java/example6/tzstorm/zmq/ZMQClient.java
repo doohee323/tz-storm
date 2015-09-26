@@ -25,7 +25,7 @@ public class ZMQClient {
     public ZMQClient(String url) throws Exception {
         _url = url;
         context = ZMQ.context(1);
-        socket = context.socket(ZMQ.PUSH);
+        socket = context.socket(ZMQ.REQ);
         socket.setLinger(0);
         socket.setHWM(1L);
         //
@@ -65,16 +65,17 @@ public class ZMQClient {
             sb.setLength(0);
             sb.append(VERSION).append(";");
             sb.append(key).append(":").append(value).append("|").append(c);
-
             synchronized (socket) {
                 return socket.send(sb.toString().getBytes(), 0);
             }
         }
     }
 
-    public boolean send(final String message) {
+    public void send(final String message) {
         synchronized (socket) {
-            return socket.send(message.getBytes(), 0);
+            socket.send(message.getBytes(), 0);
+            String reply = socket.recvStr(0);
+            System.out.println("[" + reply + "]");
         }
     }
 
@@ -91,8 +92,8 @@ public class ZMQClient {
             int totalLines = 0;
             while (oneLine != null) {
                 totalLines++;
-                Utils.sleep(1000);
-                if(oneLine!= null && oneLine.length() > 0) {
+//                Utils.sleep(1000);
+                if (oneLine != null && oneLine.length() > 0) {
                     send(oneLine);
                 }
                 oneLine = br.readLine();
