@@ -25,7 +25,7 @@ public class ZMQClient {
     public ZMQClient(String url) throws Exception {
         _url = url;
         context = ZMQ.context(1);
-        socket = context.socket(ZMQ.REQ);
+        socket = context.socket(ZMQ.PUB);
         socket.setLinger(0);
         socket.setHWM(1L);
         //
@@ -36,46 +36,9 @@ public class ZMQClient {
         socket.connect(url);
     }
 
-    public boolean timing(final String key, final String values) {
-        return send(key, values, "t");
-    }
-
-    public boolean increment(final String key) {
-        return send(key, 1, "c");
-    }
-
-    public boolean increment(final String key, final int value) {
-        return send(key, value, "c");
-    }
-
-    private boolean send(final String key, final String values, final String c) {
-        synchronized (sb) {
-            sb.setLength(0);
-            sb.append(VERSION).append(";");
-            sb.append(key).append(":").append(values).append("|").append(c);
-
-            synchronized (socket) {
-                return socket.send(sb.toString().getBytes(), 0);
-            }
-        }
-    }
-
-    private boolean send(final String key, final int value, final String c) {
-        synchronized (sb) {
-            sb.setLength(0);
-            sb.append(VERSION).append(";");
-            sb.append(key).append(":").append(value).append("|").append(c);
-            synchronized (socket) {
-                return socket.send(sb.toString().getBytes(), 0);
-            }
-        }
-    }
-
     public void send(final String message) {
         synchronized (socket) {
             socket.send(message.getBytes(), 0);
-            String reply = socket.recvStr(0);
-            System.out.println("[" + reply + "]");
         }
     }
 

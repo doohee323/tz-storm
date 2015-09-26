@@ -9,6 +9,8 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQException;
 
+import backtype.storm.utils.Utils;
+
 public class ZMQServer extends Thread {
     private static final Logger log = LoggerFactory.getLogger(ZMQServer.class);
     private static ZMQServer singleton = null;
@@ -79,5 +81,15 @@ public class ZMQServer extends Thread {
     public void setStart(boolean start) {
         this.start = start;
     }
+    
+    public static void main(String args[]) {
+        try {
+        	ZMQServer.getInstance().start();
+            Utils.sleep(100000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }   
 
 }

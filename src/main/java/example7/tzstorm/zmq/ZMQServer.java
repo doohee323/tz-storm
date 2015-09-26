@@ -9,6 +9,8 @@ import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQException;
 
+import backtype.storm.utils.Utils;
+
 public class ZMQServer extends Thread {
     private static final Logger log = LoggerFactory.getLogger(ZMQServer.class);
     private static ZMQServer singleton = null;
@@ -39,7 +41,7 @@ public class ZMQServer extends Thread {
     public ZMQServer() {
         try {
             context = ZMQ.context(1);
-            pull = context.socket(ZMQ.REP);
+            pull = context.socket(ZMQ.SUB);
             pull.setLinger(0L);
             pull.bind("tcp://127.0.0.1:9999");
 
@@ -62,7 +64,6 @@ public class ZMQServer extends Thread {
                         System.out.println(input);
                         log.error(input);
                         logData.add(input);
-                        pull.send("RECIEVE".getBytes(), 0);
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -80,4 +81,13 @@ public class ZMQServer extends Thread {
         this.start = start;
     }
 
+    public static void main(String args[]) {
+        try {
+        	ZMQServer.getInstance().start();
+            Utils.sleep(100000);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }    
 }
