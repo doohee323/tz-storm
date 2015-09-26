@@ -1,4 +1,4 @@
-package example6.tzstorm.spout;
+package example7.tzstorm.spout;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

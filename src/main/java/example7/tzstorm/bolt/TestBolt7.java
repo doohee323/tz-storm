@@ -1,4 +1,4 @@
-package example6.tzstorm.bolt;
+package example7.tzstorm.bolt;
 
 import java.util.List;
 import java.util.Map;
@@ -14,13 +14,13 @@ import storm.trident.tuple.TridentTuple;
 import com.espertech.esper.client.EPServiceProvider;
 import com.google.gson.Gson;
 
-import example6.tzstorm.LogBean;
+import example7.tzstorm.LogBean;
 
 @SuppressWarnings("rawtypes")
-public class TestBolt6 implements Function {
+public class TestBolt7 implements Function {
 
     private static final long serialVersionUID = 1L;
-    static final Logger log = LoggerFactory.getLogger(TestBolt6.class);
+    static final Logger log = LoggerFactory.getLogger(TestBolt7.class);
     private int partitionIndex;
 
     private static final Gson gson = new Gson();

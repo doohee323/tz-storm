@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <timestamp key="bySecond" datePattern="yyyyMMddHH" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%message%n%xException{5}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="zmqinput" class="ch.qos.logback.core.FileAppender">
+    <file>data/zmqinput.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="esperinput" class="ch.qos.logback.core.FileAppender">
+  <file>data/esperinput.log</file>
+  <append>false</append>
+  <encoder>
+    <pattern>%msg%n</pattern>
+  </encoder>
+</appender>
+
+  <appender name="esperresult" class="ch.qos.logback.core.FileAppender">
+    <file>data/esperresult.log</file>
+    <append>true</append>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="example6.tzstorm.spout" level="ERROR" additivity="false">
+    <appender-ref ref="zmqinput" />
+  </logger>
+
+  <logger name="example6.tzstorm.bolt.TestBolt6" level="INFO" additivity="false">
+    <appender-ref ref="esperinput" />
+  </logger>
+
+  <logger name="example6.tzstorm.bolt.EsperFunc" level="ERROR" additivity="false">
+    <appender-ref ref="esperresult" />
+  </logger>
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>

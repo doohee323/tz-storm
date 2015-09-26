@@ -1,4 +1,4 @@
-package example6.tzstorm.spout;
+package example7.tzstorm.spout;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import storm.trident.operation.TridentCollector;
 import storm.trident.spout.ITridentSpout.Emitter;
 import storm.trident.topology.TransactionAttempt;
-import example6.tzstorm.zmq.ZMQServer;
+import example7.tzstorm.zmq.ZMQServer;
 
 public class LogEmitter implements Emitter<Long> {
     private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);

@@ -1,11 +1,10 @@
 This is a Kafka-Storm-Esper example on vagrant.
 =====================================
 
-You can run like this,
-
+You can run it on vagrant like this,
 ./build_deb.sh
 
-You can see the status of storm at http://192.168.82.150:8080.
+and you can see the status of storm at http://192.168.82.150:8080.
 
 It has 2 VMs. (/tzstorm/setup.conf)
 
@@ -26,31 +25,35 @@ When you run topology, you can use VM arguments.
 - in storm environment, use "-DrunType=storm".
 - in kafka-integrate environment, use "-DrunType=kafka".
 
+You can change logback configration file for each examples like this.
+-Dlogback.configurationFile=logback6.xml
+
 There are some examples.
+1) Simple storm example
 /tzstorm/src/main/java/example/tzstorm/TestTopology.java
--> Simple storm example 
 
+2) storm + esper example
 /tzstorm/src/main/java/example2/tzstorm/TestTopology2.java
--> storm + esper example 
 
+3) multiple bolts example
 /tzstorm/src/main/java/example3/tzstorm/TestTopology3.java
--> multiple bolts example
 
+4) kafka - storm(multiple bolts) example
 /tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
--> kafka - storm(multiple bolts) example
 
+5) storm + trident(unique data) + esper example
 /tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
--> storm + trident(unique data) + esper example 
 
+6) zmq REP/REQ + storm + trident(unique data) + esper example
 /tzstorm/src/main/java/example6/tzstorm/TestTopology6.java
--> zmq pull + storm + trident(unique data) + esper example 
 -classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
 /tzstorm/src/main/java/example6/tzstorm/zmq/ZMQClient.java
--> zmq push
 -classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
-* zmq install on mac
+7) zmq BROADCAST + storm + trident(unique data) + esper example
+
+cf) zmq install on mac
 
 1) libzmq
 git clone git://github.com/zeromq/libzmq.git
