@@ -13,6 +13,8 @@ import example6.tzstorm.bolt.TestBolt6;
 import example6.tzstorm.operator.DistinctStateFactory;
 import example6.tzstorm.operator.DistinctStateUpdater;
 import example6.tzstorm.spout.TestSpout6;
+import example6.tzstorm.zmq.ZMQServer;
+
 
 public class TestTopology6 {
 
@@ -33,7 +35,7 @@ public class TestTopology6 {
             LocalCluster cluster = new LocalCluster();
 
             cluster.submitTopology(TOPOLOGY_ID, conf, stormTopology);
-            Utils.sleep(1000000);
+            Utils.sleep(10000000);
             cluster.killTopology(TOPOLOGY_ID);
             cluster.shutdown();
         } else {
