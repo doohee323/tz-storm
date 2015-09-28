@@ -14,7 +14,6 @@ import example7.tzstorm.operator.DistinctStateFactory;
 import example7.tzstorm.operator.DistinctStateUpdater;
 import example7.tzstorm.spout.TestSpout7;
 
-
 public class TestTopology7 {
 
     private static final String TOPOLOGY_ID = "TestTopology7";

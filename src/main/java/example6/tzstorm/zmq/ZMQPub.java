@@ -1,4 +1,4 @@
-package example7.tzstorm.zmq;
+package example6.tzstorm.zmq;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

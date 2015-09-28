@@ -9,18 +9,18 @@ import org.slf4j.LoggerFactory;
 import storm.trident.operation.TridentCollector;
 import storm.trident.spout.ITridentSpout.Emitter;
 import storm.trident.topology.TransactionAttempt;
-import example7.tzstorm.zmq.ZMQSub;
+import example7.tzstorm.zmq.ZMQServer;
 
 public class LogEmitter implements Emitter<Long> {
     private static final Logger log = LoggerFactory.getLogger(LogEmitter.class);
 
     public void emitBatch(TransactionAttempt tx, Long coordinatorMeta, TridentCollector collector) {
 //        log.debug("Emitter.emitBatch({}, {}, collector)", tx, coordinatorMeta);
-        if(!ZMQSub.getInstance().isStart()) {
-            ZMQSub.getInstance().start();
+        if(!ZMQServer.getInstance().isStart()) {
+            ZMQServer.getInstance().start();
         }
-        if(ZMQSub.getInstance().getLogData() != null) {
-            for (String input : ZMQSub.getInstance().getLogData()) {
+        if(ZMQServer.getInstance().getLogData() != null) {
+            for (String input : ZMQServer.getInstance().getLogData()) {
                 log.error("got from zmq:" + input);
                 List<Object> oneTuple = Arrays.<Object> asList(input);
                 collector.emit(oneTuple);

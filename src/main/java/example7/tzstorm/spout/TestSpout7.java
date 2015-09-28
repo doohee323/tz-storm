@@ -15,12 +15,12 @@ public class TestSpout7 implements ITridentSpout<Long> {
     private static final Log log = LogFactory.getLog(TestSpout7.class);
 
     public BatchCoordinator<Long> getCoordinator(String txStateId, Map conf, TopologyContext context) {
-//        log.debug("TestSpout7.getCoordinator({}, conf, context)" + txStateId);
+//        log.debug("TestSpout6.getCoordinator({}, conf, context)" + txStateId);
         return new LogBatchCoordinator();
     }
 
     public Emitter<Long> getEmitter(String txStateId, Map conf, TopologyContext context) {
-//        log.debug("TestSpout7.getEmitter({}, conf, context)" + txStateId);
+//        log.debug("TestSpout6.getEmitter({}, conf, context)" + txStateId);
         return new LogEmitter();
     }
 

@@ -44,14 +44,14 @@ There are some examples.
 5) storm + trident(unique data) + esper example
 /tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
 
-6) zmq REP/REQ + storm + trident(unique data) + esper example
-/tzstorm/src/main/java/example6/tzstorm/TestTopology6.java
+6) zmq PUB/SUB + storm + trident(unique data) + esper example
+
+7) zmq REP/REQ + storm + trident(unique data) + esper example
+/tzstorm/src/main/java/example7/tzstorm/TestTopology7.java
 -classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
-/tzstorm/src/main/java/example6/tzstorm/zmq/ZMQClient.java
+/tzstorm/src/main/java/example7/tzstorm/zmq/ZMQClient.java
 -classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
-
-7) zmq BROADCAST + storm + trident(unique data) + esper example
 
 cf) zmq install on mac
 
