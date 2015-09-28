@@ -64,25 +64,25 @@ This is a Kafka-Storm-Esper example on vagrant.
 cf) zmq install on mac
 
 	1) libzmq
-	git clone git://github.com/zeromq/libzmq.git
-	cd libzmq
-	./autogen.sh
-	./configure --prefix=/usr/share/pkgconfig --without-libsodium
-	make
-	sudo make install
+		git clone git://github.com/zeromq/libzmq.git
+		cd libzmq
+		./autogen.sh
+		./configure --prefix=/usr/share/pkgconfig --without-libsodium
+		make
+		sudo make install
 	
 	2) jzmq
-	git clone https://github.com/zeromq/jzmq.git
-	cd jzmq
-	./autogen.sh
-	./configure --with-zeromq=/home/vagrant/libzmq
-	(./configure --with-zeromq=/Users/mac/tmp/libzmq)
-	make
-	sudo make install
+		git clone https://github.com/zeromq/jzmq.git
+		cd jzmq
+		./autogen.sh
+		./configure --with-zeromq=/home/vagrant/libzmq
+		(./configure --with-zeromq=/Users/mac/tmp/libzmq)
+		make
+		sudo make install
 	
 	3) copy libraries
-	sudo cp -Rf /usr/share/pkgconfig/lib/* /usr/local/lib
-	export LD_LIBRARY_PATH=/usr/local/lib
+		sudo cp -Rf /usr/share/pkgconfig/lib/* /usr/local/lib
+		export LD_LIBRARY_PATH=/usr/local/lib
 
 
 
