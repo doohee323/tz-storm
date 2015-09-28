@@ -5,7 +5,7 @@ This is a Kafka-Storm-Esper example on vagrant.
 	You can run it on vagrant like this,
 	./build_deb.sh
 	
-	and you can see the status of storm at http://192.168.82.150:8080.
+	and you can see the status of storm at http://192.168.82.157:8080.
 
 2. examples
 	There are some examples.
