@@ -84,7 +84,9 @@ echo 'supervisor.heartbeat.frequency.secs: 10' >> conf/storm.yaml
 echo 'supervisor.worker.start.timeout.secs: 120' >> conf/storm.yaml
 
 cp /vagrant/etc/init/storm.conf /etc/init
+storm nimbus &
 storm supervisor &
+storm ui &
 
 ### [launch example app] ############################################################################################################
 cd $HOME/$PROJ_NAME
