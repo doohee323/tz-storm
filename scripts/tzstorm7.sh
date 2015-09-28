@@ -22,7 +22,7 @@ cp /vagrant/target/version.ini $HOME/$PROJ_NAME
 export VERSION=$(cat $HOME/$PROJ_NAME/version.ini)
 
 #apt-get update
-apt-get install software-properties-common python-software-properties, libtool, build-essential, autoconf, and automake -y
+apt-get install libtool autoconf automake uuid-dev build-essential wget g++ git pkg-config -y
 #add-apt-repository ppa:openjdk-r/ppa -y
 
 apt-get update
@@ -34,17 +34,31 @@ echo '' >> $HOME/.bashrc
 echo 'export PATH=$PATH:.:$HOME/apache-storm-0.9.5/bin:$HOME/kafka_2.11-0.8.2.1/bin:$HOME/logstash-1.5.3/bin' >> $HOME/.bashrc
 echo 'export PROJ_NAME='$PROJ_NAME >> $HOME/.bashrc
 echo 'export VERSION='$VERSION >> $HOME/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/lib' >> $HOME/.bashrc
 
 PATH=$PATH:.:$HOME/apache-storm-0.9.5/bin:$HOME/kafka_2.11-0.8.2.1/bin:$HOME/logstash-1.5.3/bin
 
-### [install zmq] ############################################################################################################
+### [install libzmq] ############################################################################################################
 cd $HOME
-wget http://download.zeromq.org/zeromq-4.1.3.tar.gz
-tar xvzf zeromq-4.1.3.tar.gz
-cd zeromq-4.1.3
-./configure --without-libsodium
+git clone https://github.com/zeromq/libzmq.git
+cd libzmq
+./autogen.sh
+./configure --prefix=/usr/share/pkgconfig --without-libsodium
 make
 make install
+cp -Rf /usr/share/pkgconfig/lib/* /usr/local/lib 
+#cp /vagrant/lib/jzmq-3.1.0.jar $HOME/tzstorm
+#cp /vagrant/lib/zmq.jar $HOME/tzstorm
+
+git clone https://github.com/zeromq/jzmq.git
+cd jzmq
+./autogen.sh
+./configure
+make
+make install
+
+export LD_LIBRARY_PATH=/usr/local/lib
+ldconfig
 
 ### [install apache-storm] ############################################################################################################
 cd $HOME
@@ -73,15 +87,17 @@ cp /vagrant/etc/init/storm.conf /etc/init
 storm supervisor &
 
 ### [launch example app] ############################################################################################################
-cd $HOME
+cd $HOME/$PROJ_NAME
 cp /vagrant/target/$PROJ_NAME-$VERSION.jar $HOME/$PROJ_NAME
+cp /vagrant/target/$PROJ_NAME-$VERSION-jar-with-dependencies.jar $HOME/$PROJ_NAME
 mkdir -p $HOME/$PROJ_NAME/data
 cp /vagrant/data/a.txt $HOME/$PROJ_NAME/data
 
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example3.tzstorm.TestTopology3 TestTopology_tzstorm3
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example7.tzstorm.TestTopology7 TestTopology_tzstorm7
+java -Djava.library.path=/usr/local/lib -classpath $HOME/$PROJ_NAME/jzmq-3.1.0.jar -cp tzstorm-0.0.1-SNAPSHOT-jar-with-dependencies.jar example7.tzstorm.zmq.ZMQClient
 
 #storm list
-#storm deactivate TestTopology_tzstorm2
-#storm kill TestTopology_tzstorm2
+#storm deactivate TestTopology_tzstorm7
+#storm kill TestTopology_tzstorm7
 
 
