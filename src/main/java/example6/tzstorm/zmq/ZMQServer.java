@@ -43,7 +43,7 @@ public class ZMQServer extends Thread {
             context = ZMQ.context(1);
             pull = context.socket(ZMQ.REP);
             pull.setLinger(0L);
-            pull.bind("tcp://127.0.0.1:9999");
+            pull.bind("tcp://*:9999");
 
             poller = context.poller(1);
             poller.register(pull, Poller.POLLIN);
