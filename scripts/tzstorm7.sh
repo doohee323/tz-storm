@@ -47,8 +47,6 @@ cd libzmq
 make
 make install
 cp -Rf /usr/share/pkgconfig/lib/* /usr/local/lib 
-#cp /vagrant/lib/jzmq-3.1.0.jar $HOME/tzstorm
-#cp /vagrant/lib/zmq.jar $HOME/tzstorm
 
 git clone https://github.com/zeromq/jzmq.git
 cd jzmq

@@ -10,28 +10,28 @@ This is a Kafka-Storm-Esper example on vagrant.
 2. examples
 	There are some examples.
 	1) Simple storm example
-	/tzstorm/src/main/java/example/tzstorm/TestTopology.java
+		/tzstorm/src/main/java/example/tzstorm/TestTopology.java
 	
 	2) storm + esper example
-	/tzstorm/src/main/java/example2/tzstorm/TestTopology2.java
+		/tzstorm/src/main/java/example2/tzstorm/TestTopology2.java
 	
 	3) multiple bolts example
-	/tzstorm/src/main/java/example3/tzstorm/TestTopology3.java
+		/tzstorm/src/main/java/example3/tzstorm/TestTopology3.java
 	
 	4) kafka - storm(multiple bolts) example
-	/tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
+		/tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
 	
 	5) storm + trident(unique data) + esper example
-	/tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
+		/tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
 	
 	6) zmq PUB/SUB + storm + trident(unique data) + esper example
 	
 	7) zmq REP/REQ + storm + trident(unique data) + esper example
-	/tzstorm/src/main/java/example7/tzstorm/TestTopology7.java
-	-classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
-	
-	/tzstorm/src/main/java/example7/tzstorm/zmq/ZMQClient.java
-	-classpath .:/Users/mac/git2/tzstorm/lib/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+		/tzstorm/src/main/java/example7/tzstorm/TestTopology7.java
+		-classpath .:/home/vagrant/tzstorm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+		
+		/tzstorm/src/main/java/example7/tzstorm/zmq/ZMQClient.java
+		-classpath .:/home/vagrant/tzstorm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
 3. set VM configuration for vagrant
 	You can define the VM server which you want to run.
@@ -80,10 +80,8 @@ cf) zmq install on mac
 	sudo make install
 	
 	3) copy libraries
-	sudo cp /usr/local/share/java/zmq.jar /usr/local/lib
-	sudo cp /usr/local/lib/libjzmq.* /usr/local/lib
-	(sudo cp /usr/share/pkgconfig/lib/*.* /usr/local/lib)
-
+	sudo cp -Rf /usr/share/pkgconfig/lib/* /usr/local/lib
+	export LD_LIBRARY_PATH=/usr/local/lib
 
 
 
