@@ -41,7 +41,7 @@ public class ZMQSub extends Thread {
 			context = ZMQ.context(1);
 			sub = context.socket(ZMQ.SUB);
 			sub.setLinger(0L);
-			sub.connect("tcp://localhost:5563");
+			sub.connect("tcp://192.168.1.4:5563");
 		} catch (ZMQException e) {
 			throw new RuntimeException(e.getCause());
 		} catch (Exception e) {
