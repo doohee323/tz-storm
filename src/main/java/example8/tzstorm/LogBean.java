@@ -11,6 +11,7 @@ public class LogBean {
     }
 
     private String target;
+    private String timestamp;
     private String datapoint;
 
     public String getTarget() {
@@ -27,6 +28,14 @@ public class LogBean {
 
     public void setDatapoint(String datapoint) {
         this.datapoint = datapoint;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
 }

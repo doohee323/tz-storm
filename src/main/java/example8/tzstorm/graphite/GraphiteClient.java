@@ -43,6 +43,7 @@ public class GraphiteClient {
                 LogBean bean = new LogBean();
                 bean.setTarget(arry.get(i).getAsJsonObject().get("target").getAsString());
                 bean.setDatapoint(gson.toJson(arry.get(i).getAsJsonObject().get("datapoints")));
+                bean.setTimestamp(arry.get(i).getAsJsonObject().get("datapoints").getAsJsonArray().get(0).getAsJsonArray().get(1).getAsString());
                 logData.add(gson.toJson(bean));
                 log.info(gson.toJson(bean));
             }

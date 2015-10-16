@@ -48,10 +48,10 @@ public class EsperFunc {
                         JsonArray arry = (JsonArray) new JsonParser().parse(e.get("datapoint").toString());
                         for (int i = 0; i < arry.size(); i++) {
                             if(arry.get(i).getAsJsonArray().get(0).isJsonNull()) {
-                                log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": "
+                                log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": " + e.get("timestamp") + ": "
                                         + "null:" + arry.get(i).getAsJsonArray().get(1).getAsString());
                             } else {
-                                log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": "
+                                log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": " + e.get("timestamp") + ": "
                                         + arry.get(i).getAsJsonArray().get(0).getAsString() + ":" + arry.get(i).getAsJsonArray());
                             }
                         }
