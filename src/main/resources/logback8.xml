@@ -8,8 +8,8 @@
     </encoder>
   </appender>
 
-  <appender name="zmqinput" class="ch.qos.logback.core.FileAppender">
-    <file>data/zmqinput7.log</file>
+  <appender name="graphiteinput" class="ch.qos.logback.core.FileAppender">
+    <file>data/graphiteinput8.log</file>
     <append>false</append>
     <encoder>
       <pattern>%msg%n</pattern>
@@ -17,7 +17,7 @@
   </appender>
 
   <appender name="esperinput" class="ch.qos.logback.core.FileAppender">
-  <file>data/esperinput7.log</file>
+  <file>data/esperinput8.log</file>
   <append>false</append>
   <encoder>
     <pattern>%msg%n</pattern>
@@ -25,22 +25,22 @@
 </appender>
 
   <appender name="esperresult" class="ch.qos.logback.core.FileAppender">
-    <file>data/esperresult7.log</file>
+    <file>data/esperresult8.log</file>
     <append>true</append>
     <encoder>
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
 
-  <logger name="example7.tzstorm.spout" level="ERROR" additivity="false">
-    <appender-ref ref="zmqinput" />
+  <logger name="example8.tzstorm.spout" level="INFO" additivity="false">
+    <appender-ref ref="graphiteinput" />
   </logger>
 
-  <logger name="example7.tzstorm.bolt.TestBolt7" level="INFO" additivity="false">
+  <logger name="example8.tzstorm.bolt.TestBolt8" level="INFO" additivity="false">
     <appender-ref ref="esperinput" />
   </logger>
 
-  <logger name="example7.tzstorm.bolt.EsperFunc" level="ERROR" additivity="false">
+  <logger name="example8.tzstorm.bolt.EsperFunc" level="ERROR" additivity="false">
     <appender-ref ref="esperresult" />
   </logger>
 

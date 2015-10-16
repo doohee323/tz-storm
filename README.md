@@ -34,6 +34,9 @@ This is a Kafka-Storm-Esper example on vagrant.
 		/tzstorm/src/main/java/example7/tzstorm/zmq/ZMQClient.java
 		-classpath .:/home/vagrant/tzstorm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
+	8) graphite + storm + trident(unique data) + esper example
+		/tzstorm/src/main/java/example8/tzstorm/TestTopology8.java
+	
 3. set VM configuration for vagrant
 	You can define the VM server which you want to run.
 	for example, if you define the VMs for example7,
