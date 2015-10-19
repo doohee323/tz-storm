@@ -8,13 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import backtype.storm.generated.GlobalStreamId;
-import backtype.storm.task.OutputCollector;
-import backtype.storm.task.TopologyContext;
-import backtype.storm.topology.OutputFieldsDeclarer;
-import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Tuple;
-import backtype.storm.topology.base.BaseRichBolt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPAdministrator;
@@ -24,8 +19,19 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
+import backtype.storm.generated.GlobalStreamId;
+import backtype.storm.task.OutputCollector;
+import backtype.storm.task.TopologyContext;
+import backtype.storm.topology.OutputFieldsDeclarer;
+import backtype.storm.topology.base.BaseRichBolt;
+import backtype.storm.tuple.Fields;
+import backtype.storm.tuple.Tuple;
 
 public class EsperBolt extends BaseRichBolt implements UpdateListener {
+	static final Logger log = LoggerFactory.getLogger(EsperBolt.class);
 	private static final long serialVersionUID = 1L;
 
 	public static class Builder {
@@ -324,15 +330,33 @@ public class EsperBolt extends BaseRichBolt implements UpdateListener {
 
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {
 		if (newEvents != null) {
-			for (EventBean newEvent : newEvents) {
-				EventTypeDescriptor eventType = getEventType(newEvent.getEventType().getName());
-
-				if (eventType == null) {
-					// anonymous event ?
-					eventType = getEventType(null);
-				}
-				if (eventType != null) {
-					collector.emit(eventType.getStreamId(), toTuple(newEvent, eventType.getFields()));
+			// for (EventBean newEvent : newEvents) {
+			// EventTypeDescriptor eventType =
+			// getEventType(newEvent.getEventType().getName());
+			//
+			// if (eventType == null) {
+			// // anonymous event ?
+			// eventType = getEventType(null);
+			// }
+			// if (eventType != null) {
+			// collector.emit(eventType.getStreamId(), toTuple(newEvent,
+			// eventType.getFields()));
+			// }
+			// }
+			for (EventBean e : newEvents) {
+				e.get("target");
+				e.get("timestamp");
+				JsonArray arry = (JsonArray) new JsonParser().parse(e.get("datapoint").toString());
+				for (int i = 0; i < arry.size(); i++) {
+					if (arry.get(i).getAsJsonArray().get(0).isJsonNull()) {
+						log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": "
+								+ e.get("timestamp") + ": " + "null:"
+								+ arry.get(i).getAsJsonArray().get(1).getAsString());
+					} else {
+						log.error("esper:" + System.currentTimeMillis() + " -> " + e.get("target") + ": "
+								+ e.get("timestamp") + ": " + arry.get(i).getAsJsonArray().get(0).getAsString() + ":"
+								+ arry.get(i).getAsJsonArray());
+					}
 				}
 			}
 		}

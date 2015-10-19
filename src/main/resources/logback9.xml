@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+  <timestamp key="bySecond" datePattern="yyyyMMddHH" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%message%n%xException{5}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="graphiteinput" class="ch.qos.logback.core.FileAppender">
+    <file>data/graphiteinput9.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="esperresult" class="ch.qos.logback.core.FileAppender">
+    <file>data/esperresult9.log</file>
+    <append>true</append>
+    <encoder>
+      <pattern>%msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="example9.tzstorm.graphite" level="INFO" additivity="false">
+    <appender-ref ref="graphiteinput" />
+  </logger>
+
+  <logger name="example9.tzstorm.bolt.EsperBolt" level="ERROR" additivity="false">
+    <appender-ref ref="esperresult" />
+  </logger>
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>

@@ -10,9 +10,25 @@ public class LogBean {
         return gson.fromJson(line, LogBean.class);
     }
 
+    private String target;
     private String timestamp;
-    private String hostname;
-    private String client_ip;
+    private String datapoint;
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    public String getDatapoint() {
+        return datapoint;
+    }
+
+    public void setDatapoint(String datapoint) {
+        this.datapoint = datapoint;
+    }
 
     public String getTimestamp() {
         return timestamp;
@@ -20,22 +36,6 @@ public class LogBean {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getHostname() {
-        return hostname;
-    }
-
-    public void setHostname(String hostname) {
-        this.hostname = hostname;
-    }
-
-    public String getClient_ip() {
-        return client_ip;
-    }
-
-    public void setClient_ip(String client_ip) {
-        this.client_ip = client_ip;
     }
 
 }
