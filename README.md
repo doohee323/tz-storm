@@ -11,48 +11,48 @@ This is a Kafka-Storm-Esper example on vagrant.
 	There are some examples.
 	
 	1) Simple storm example
-		/tzstorm/src/main/java/example/tzstorm/TestTopology.java
+		/tz-storm/src/main/java/example/tz-storm/TestTopology.java
 	
 	2) storm + esper example
-		/tzstorm/src/main/java/example2/tzstorm/TestTopology2.java
+		/tz-storm/src/main/java/example2/tz-storm/TestTopology2.java
 	
 	3) multiple bolts example
-		/tzstorm/src/main/java/example3/tzstorm/TestTopology3.java
+		/tz-storm/src/main/java/example3/tz-storm/TestTopology3.java
 	
 	4) kafka - storm(multiple bolts) example
-		/tzstorm/src/main/java/example4/tzstorm/TestTopology4.java
+		/tz-storm/src/main/java/example4/tz-storm/TestTopology4.java
 	
 	5) storm + trident(unique data) + esper example
-		/tzstorm/src/main/java/example5/tzstorm/TestTopology5.java
+		/tz-storm/src/main/java/example5/tz-storm/TestTopology5.java
 	
 	6) zmq PUB/SUB + storm + trident(unique data) + esper example
 	
 	7) zmq REP/REQ + storm + trident(unique data) + esper example
-		/tzstorm/src/main/java/example7/tzstorm/TestTopology7.java
-		-classpath .:/home/vagrant/tzstorm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+		/tz-storm/src/main/java/example7/tz-storm/TestTopology7.java
+		-classpath .:/home/vagrant/tz-storm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 		
-		/tzstorm/src/main/java/example7/tzstorm/zmq/ZMQClient.java
-		-classpath .:/home/vagrant/tzstorm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
+		/tz-storm/src/main/java/example7/tz-storm/zmq/ZMQClient.java
+		-classpath .:/home/vagrant/tz-storm/jzmq-3.1.0.jar -Djava.library.path=/usr/local/lib -Xcheck:jni
 
 	8) graphite + storm + trident(unique data) + esper example
-		/tzstorm/src/main/java/example8/tzstorm/TestTopology8.java
+		/tz-storm/src/main/java/example8/tz-storm/TestTopology8.java
 	
 3. set VM configuration for vagrant
 	You can define the VM server which you want to run.
 	for example, if you define the VMs for example7,
-	- in /tzstorm/setup.conf 
+	- in /tz-storm/setup.conf 
 	{
 	  'ip'=> {
-	    'tzstorm7' => "192.168.82.157"
+	    'tz-storm7' => "192.168.82.157"
 	  }
 	}
-	- in /tzstorm/setup.rc
-	cfg_ip_tzstorm7="192.168.82.157"
+	- in /tz-storm/setup.rc
+	cfg_ip_tz-storm7="192.168.82.157"
 	
-	Then, vagrant will use this shell, /tzstorm/scripts/tzstorm7.sh for build VM. 
+	Then, vagrant will use this shell, /tz-storm/scripts/tz-storm7.sh for build VM. 
 
 4. set VM configuration for vagrant
-	It includes some features, (/tzstorm/scripts/tzstorm.sh)
+	It includes some features, (/tz-storm/scripts/tz-storm.sh)
 
 5. etc 
 	When you run topology, you can use VM arguments.

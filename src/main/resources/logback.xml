@@ -8,48 +8,48 @@
     </encoder>
   </appender>
 
-  <appender name="tzstorm" class="ch.qos.logback.core.FileAppender">
-    <file>data/tzstorm.log</file>
+  <appender name="tz-storm" class="ch.qos.logback.core.FileAppender">
+    <file>data/tz-storm.log</file>
     <append>false</append>
     <encoder>
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
 
-  <appender name="tzstorm2" class="ch.qos.logback.core.FileAppender">
-    <file>data/tzstorm2.log</file>
+  <appender name="tz-storm2" class="ch.qos.logback.core.FileAppender">
+    <file>data/tz-storm2.log</file>
     <append>false</append>
     <encoder>
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
 
-  <appender name="tzstorm3" class="ch.qos.logback.core.FileAppender">
-    <file>data/tzstorm3.log</file>
+  <appender name="tz-storm3" class="ch.qos.logback.core.FileAppender">
+    <file>data/tz-storm3.log</file>
     <append>false</append>
     <encoder>
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
 
-  <appender name="tzstorm4" class="ch.qos.logback.core.FileAppender">
-    <file>data/tzstorm4.log</file>
+  <appender name="tz-storm4" class="ch.qos.logback.core.FileAppender">
+    <file>data/tz-storm4.log</file>
     <append>false</append>
     <encoder>
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
 
-  <appender name="tzstorm5" class="ch.qos.logback.core.FileAppender">
-  <file>data/tzstorm5.log</file>
+  <appender name="tz-storm5" class="ch.qos.logback.core.FileAppender">
+  <file>data/tz-storm5.log</file>
   <append>false</append>
   <encoder>
     <pattern>%msg%n</pattern>
   </encoder>
 </appender>
 
-  <appender name="tzstorm6" class="ch.qos.logback.core.FileAppender">
-    <file>data/tzstorm6.log</file>
+  <appender name="tz-storm6" class="ch.qos.logback.core.FileAppender">
+    <file>data/tz-storm6.log</file>
     <append>true</append>
     <encoder>
       <pattern>%msg%n</pattern>
@@ -57,27 +57,27 @@
   </appender>
 
   <logger name="example.tzstorm" level="ERROR" additivity="false">
-    <appender-ref ref="tzstorm" />
+    <appender-ref ref="tz-storm" />
   </logger>
 
   <logger name="example2.tzstorm" level="ERROR" additivity="false">
-    <appender-ref ref="tzstorm2" />
+    <appender-ref ref="tz-storm2" />
   </logger>
 
   <logger name="example3.tzstorm" level="ERROR" additivity="false">
-    <appender-ref ref="tzstorm3" />
+    <appender-ref ref="tz-storm3" />
   </logger>
 
   <logger name="example6.tzstorm.spout" level="ERROR" additivity="false">
-    <appender-ref ref="tzstorm4" />
+    <appender-ref ref="tz-storm4" />
   </logger>
 
   <logger name="example6.tzstorm.bolt.TestBolt6" level="INFO" additivity="false">
-    <appender-ref ref="tzstorm5" />
+    <appender-ref ref="tz-storm5" />
   </logger>
 
   <logger name="example6.tzstorm.bolt.EsperFunc" level="ERROR" additivity="false">
-    <appender-ref ref="tzstorm6" />
+    <appender-ref ref="tz-storm6" />
   </logger>
 
   <root level="DEBUG">

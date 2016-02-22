@@ -8,13 +8,13 @@ set -x
 # change hosts
 echo '' >> /etc/hosts
 echo '# for vm' >> /etc/hosts
-echo '192.168.82.150 tzstorm.test.com' >> /etc/hosts
-echo '192.168.82.152 tzstorm2.test.com' >> /etc/hosts
+echo '192.168.82.150 tz-storm.test.com' >> /etc/hosts
+echo '192.168.82.152 tz-storm2.test.com' >> /etc/hosts
 
 echo "Reading config...." >&2
 source /vagrant/setup.rc
 
-PROJ_NAME=tzstorm
+PROJ_NAME=tz-storm
 HOME=/home/vagrant
 mkdir -p $HOME/$PROJ_NAME
 cp /vagrant/target/version.ini $HOME/$PROJ_NAME
@@ -43,8 +43,8 @@ tar xvzf zookeeper-3.4.6.tar.gz
 cd zookeeper-3.4.6
 cp conf/zoo_sample.cfg conf/zoo.cfg
 echo '' >> conf/zoo.cfg
-echo 'tzstorm.test.com=zookeeper1:2888:3888' >> conf/zoo.cfg
-echo 'tzstorm2.test.com=zookeeper2:2888:3888' >> conf/zoo.cfg
+echo 'tz-storm.test.com=zookeeper1:2888:3888' >> conf/zoo.cfg
+echo 'tz-storm2.test.com=zookeeper2:2888:3888' >> conf/zoo.cfg
 
 cp /vagrant/etc/init/zookeeper.conf /etc/init
 mkdir -p logs
@@ -57,16 +57,16 @@ unzip apache-storm-0.9.5.zip
 cd apache-storm-0.9.5
 echo '' >> conf/storm.yaml
 echo 'storm.zookeeper.servers:' >> conf/storm.yaml
-echo '    - "tzstorm.test.com"' >> conf/storm.yaml
-echo '    - "tzstorm2.test.com"' >> conf/storm.yaml
-echo 'nimbus.host: "tzstorm.test.com"' >> conf/storm.yaml
+echo '    - "tz-storm.test.com"' >> conf/storm.yaml
+echo '    - "tz-storm2.test.com"' >> conf/storm.yaml
+echo 'nimbus.host: "tz-storm.test.com"' >> conf/storm.yaml
 
 cp /vagrant/etc/init/storm.conf /etc/init
 storm nimbus &
 storm supervisor &
 storm ui &
 
-# http://tzstorm.test.com:8080
+# http://tz-storm.test.com:8080
 
 ### [install logstash] ############################################################################################################
 cd $HOME
@@ -91,10 +91,10 @@ logstash -f log_list/$PROJ_NAME.conf -t &
 cd $HOME
 cp /vagrant/target/$PROJ_NAME-$VERSION.jar $HOME/$PROJ_NAME
 
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tzstorm
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example.tzstorm.TestTopology TestTopology_tz-storm
 
 #storm list
-#storm deactivate TestTopology_tzstorm
-#storm kill TestTopology_tzstorm
+#storm deactivate TestTopology_tz-storm
+#storm kill TestTopology_tz-storm
 
 

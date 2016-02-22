@@ -12,7 +12,7 @@ PGDIR=$(cd $(dirname $0); pwd)
 #####################################
 # CHANGE YOUR PROJ NAME & DESC HERE #
 #####################################
-PROJ_NAME="tzstorm"
+PROJ_NAME="tz-storm"
 PROJ_DESC="FortiDirector storm"
 
 # get version from pom.xml

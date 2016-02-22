@@ -8,14 +8,14 @@ set -x
 # change hosts
 echo '' >> /etc/hosts
 echo '# for vm' >> /etc/hosts
-echo '192.168.82.150 tzstorm.test.com' >> /etc/hosts
-echo '192.168.82.152 tzstorm2.test.com' >> /etc/hosts
-echo '192.168.82.154 tzstorm3.test.com' >> /etc/hosts
+echo '192.168.82.150 tz-storm.test.com' >> /etc/hosts
+echo '192.168.82.152 tz-storm2.test.com' >> /etc/hosts
+echo '192.168.82.154 tz-storm3.test.com' >> /etc/hosts
 
 echo "Reading config...." >&2
 source /vagrant/setup.rc
 
-PROJ_NAME=tzstorm
+PROJ_NAME=tz-storm
 HOME=/home/vagrant
 mkdir -p $HOME/$PROJ_NAME
 cp /vagrant/target/version.ini $HOME/$PROJ_NAME
@@ -65,10 +65,10 @@ unzip apache-storm-0.9.5.zip
 cd apache-storm-0.9.5
 echo '' >> conf/storm.yaml
 echo 'storm.zookeeper.servers:' >> conf/storm.yaml
-echo '    - "tzstorm.test.com"' >> conf/storm.yaml
-echo '    - "tzstorm2.test.com"' >> conf/storm.yaml
-echo '    - "tzstorm3.test.com"' >> conf/storm.yaml
-echo 'nimbus.host: "tzstorm.test.com"' >> conf/storm.yaml
+echo '    - "tz-storm.test.com"' >> conf/storm.yaml
+echo '    - "tz-storm2.test.com"' >> conf/storm.yaml
+echo '    - "tz-storm3.test.com"' >> conf/storm.yaml
+echo 'nimbus.host: "tz-storm.test.com"' >> conf/storm.yaml
 
 echo 'supervisor.slots.ports:' >> conf/storm.yaml
 echo '    - 7000' >> conf/storm.yaml
@@ -93,11 +93,11 @@ cp /vagrant/target/$PROJ_NAME-$VERSION-jar-with-dependencies.jar $HOME/$PROJ_NAM
 mkdir -p $HOME/$PROJ_NAME/data
 cp /vagrant/data/a.txt $HOME/$PROJ_NAME/data
 
-storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example7.tzstorm.TestTopology7 TestTopology_tzstorm7
-java -Djava.library.path=/usr/local/lib -classpath $HOME/$PROJ_NAME/jzmq-3.1.0.jar -cp tzstorm-0.0.1-SNAPSHOT-jar-with-dependencies.jar example7.tzstorm.zmq.ZMQClient
+storm jar $HOME/$PROJ_NAME/$PROJ_NAME-$VERSION.jar example7.tzstorm.TestTopology7 TestTopology_tz-storm7
+java -Djava.library.path=/usr/local/lib -classpath $HOME/$PROJ_NAME/jzmq-3.1.0.jar -cp tz-storm-0.0.1-SNAPSHOT-jar-with-dependencies.jar example7.tzstorm.zmq.ZMQClient
 
 #storm list
-#storm deactivate TestTopology_tzstorm7
-#storm kill TestTopology_tzstorm7
+#storm deactivate TestTopology_tz-storm7
+#storm kill TestTopology_tz-storm7
 
 
